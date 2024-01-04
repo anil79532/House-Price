@@ -4,7 +4,7 @@ import pickle
   
 model = pickle.load(open('House_Price.pkl','rb'))
 
-appliction = Flask(__name__)
+application = Flask(__name__)
 
 Status  = {
 "New" : 0,"Ready to move" : 1,"Resale" : 2,"Under Construction" : 3,}
@@ -28,14 +28,14 @@ def predict(bedrooms,bathrooms,status,size,location,facing,Types):
     result = model.predict(user_input)[0].round(2)
     return result
 
-@appliction.route('/')
+@application.route('/')
 def index():
     return render_template('index.html',Prediction=result,Status=Status,Location=Location,Facing=Facing,Type=Type)
 
     
 
 
-@appliction.route('/predict',methods=['POST'])
+@application.route('/predict',methods=['POST'])
 def result():
     bedrooms = int(request.form['bedrooms'])
     bathrooms = int(request.form['bathrooms'])
@@ -51,4 +51,4 @@ def result():
     return render_template('index.html',prediction=result,Status=Status,Location=Location,Facing=Facing,Type=Type)   
 
 if __name__=="__main__":
-    appliction.run()
+    application.run()
